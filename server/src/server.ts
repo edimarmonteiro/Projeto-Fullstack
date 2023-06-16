@@ -1,17 +1,14 @@
-import fastify from "fastify";
-import { PrismaClient } from "@prisma/client";
+//Para isportar as variaves abiente
+import 'dotenv/config'
 
+import fastify from "fastify";
+import { authRoutes } from './routes/auth';
+import { criarconta } from './routes/criarconta';
 const app = fastify()
 const port = 333
-//Realizando conecsão com o BD
-const Prisma = new PrismaClient()
 
-app.get('/users', async () => {
-    //findMany : Metodo para trazer varios usuarios
-    const users = await Prisma.user.findMany()
-
-    return users
-})
+app.register(criarconta)
+app.register(authRoutes)
 
 app.listen({port}).then( () => 
 {
